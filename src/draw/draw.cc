@@ -1,9 +1,17 @@
 #include "draw.h"
 #include<stdio.h>
+#include "../fix_rotate/fix_rotate.h"
+
 bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2)
 {
-  Mat img;
-	img = imread(path);
+    Mat im = imread(path);
+	Mat gray;
+	cvtColor(im, gray, COLOR_BGR2GRAY);
+	Mat preprocessed = fix_rotate::preprocess2(gray);
+	double skew;
+	fix_rotate::hough_transform(preprocessed, im, &skew);
+	Mat img = fix_rotate::rot(im, skew* CV_PI / 180);
+	
 	Rect RectangleToDraw(x, y,x2-x, y2-y);
 	rectangle(img, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
 	imwrite(outpath,img);

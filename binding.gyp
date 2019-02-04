@@ -6,6 +6,7 @@
         "sources": [
             "src/main.cc",
             "src/draw/draw.cc",
+            "src/skew_fix/skew_fix.cc",
             "src/fix_rotate/fix_rotate.cc"
         ],
         'conditions': [

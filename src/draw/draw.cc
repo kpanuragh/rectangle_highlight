@@ -1,16 +1,22 @@
 #include "draw.h"
 #include<stdio.h>
+#include "../skew_fix/skew_fix.h"
 #include "../fix_rotate/fix_rotate.h"
-
+using namespace cv;
 bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2)
 {
-    Mat im = imread(path);
+
+	// char y[100];
+	char *path_char = new char[path.length() + 1]; 
+	std::strcpy(path_char, path.c_str());
+	Mat im = fix_rotate::fix_rotate(path_char);
 	Mat gray;
+	fastNlMeansDenoisingColored(im,im);
 	cvtColor(im, gray, COLOR_BGR2GRAY);
-	Mat preprocessed = fix_rotate::preprocess2(gray);
+	Mat preprocessed = skew_fix::preprocess2(gray);
 	double skew;
-	fix_rotate::hough_transform(preprocessed, im, &skew);
-	Mat img = fix_rotate::rot(im, skew* CV_PI / 180);
+	skew_fix::hough_transform(preprocessed, im, &skew);
+	Mat img = skew_fix::rot(im, skew* CV_PI / 180);
 	
 	Rect RectangleToDraw(x, y,x2-x, y2-y);
 	rectangle(img, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);

@@ -9,8 +9,10 @@ bool draw::draw(std::string path,std::string outpath,double x,double y,double x2
 	// char y[100];
 	char *path_char = new char[path.length() + 1]; 
 	std::strcpy(path_char, path.c_str());
+	
 	Mat im = fix_rotate::fix_rotate(path_char);
 	Mat gray;
+	cvtColor(im,im,COLOR_GRAY2RGB);
 	fastNlMeansDenoisingColored(im,im);
 	cvtColor(im, gray, COLOR_BGR2GRAY);
 	Mat preprocessed = skew_fix::preprocess2(gray);

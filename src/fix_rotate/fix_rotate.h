@@ -6,6 +6,5 @@ using namespace std;
 
 namespace fix_rotate
 {
-    void rotate(cv::Mat& src, double angle, cv::Mat& dst);
     cv::Mat fix_rotate(char* inputfile);
 }

@@ -2,6 +2,7 @@
 using namespace cv;
 void skew_fix::hough_transform(Mat& im, Mat& orig, double* skew)
 {
+	try{
 	double max_r = sqrt(pow(.5*im.cols, 2) + pow(.5*im.rows, 2));
 	int angleBins = 180;
 	Mat acc = Mat::zeros(Size(2 * max_r, angleBins), CV_32SC1);
@@ -61,9 +62,15 @@ void skew_fix::hough_transform(Mat& im, Mat& orig, double* skew)
 		std::cout << "skew angle " << skewangle << std::endl;
 	}
 	//imshow("orig", orig);
+		}
+		catch(cv::Exception& e){
+		  const char* err_msg = e.what();
+    	std::cout << "exception caught: " << err_msg << std::endl;
+	}
 }
 Mat skew_fix::preprocess1(Mat& im)
 {
+	try{
 	Mat ret = Mat::zeros(im.size(), CV_32SC1);
 
 	for (int x = 1; x < im.cols - 1; x++)
@@ -85,10 +92,16 @@ Mat skew_fix::preprocess1(Mat& im)
 	ret.convertTo(ret, CV_8UC1);
 	threshold(ret, ret, 50, 255, THRESH_BINARY);
 	return ret;
+		}
+		catch(cv::Exception& e){
+		  const char* err_msg = e.what();
+    	std::cout << "exception caught: " << err_msg << std::endl;
+	}
 }
 
 Mat skew_fix::preprocess2(Mat& im)
 {
+	try{
 	// 1) assume white on black and does local thresholding
 	// 2) only allow voting top is white and buttom is black(buttom text line)
 	Mat thresh;
@@ -111,9 +124,15 @@ Mat skew_fix::preprocess2(Mat& im)
 		}
 	}
 	return ret;
+		}
+		catch(cv::Exception& e){
+		  const char* err_msg = e.what();
+    	std::cout << "exception caught: " << err_msg << std::endl;
+	}
 }
 Mat skew_fix::rot(Mat& im, double thetaRad)
 {
+	try{
 	cv::Mat rotated;
 	double rskew = thetaRad * CV_PI / 180;
 	double nw = abs(sin(thetaRad))*im.rows + abs(cos(thetaRad))*im.cols;
@@ -127,4 +146,9 @@ Mat skew_fix::rot(Mat& im, double thetaRad)
 	rot_mat.at<double>(1, 2) += res.at<double>(1);
 	cv::warpAffine(im, rotated, rot_mat, Size(nw, nh), cv::INTER_LANCZOS4);
 	return rotated;
+		}
+		catch(cv::Exception& e){
+		  const char* err_msg = e.what();
+    	std::cout << "exception caught: " << err_msg << std::endl;
+	}
 }

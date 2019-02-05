@@ -2,7 +2,7 @@
 using namespace cv;
 Mat fix_rotate::fix_rotate(char* inputfile)
 {
-  
+  try{
 	tesseract::Orientation orientation;
 	tesseract::WritingDirection direction;
 	tesseract::TextlineOrder order;
@@ -40,4 +40,9 @@ Mat fix_rotate::fix_rotate(char* inputfile)
 	cv::Mat dst;
 	cv::warpAffine(src, dst, rot, bbox.size());
     return dst;
+		}
+		catch(cv::Exception& e){
+		  const char* err_msg = e.what();
+    	std::cout << "exception caught: " << err_msg << std::endl;
+	}
 }

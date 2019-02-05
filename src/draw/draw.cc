@@ -6,7 +6,7 @@ using namespace cv;
 bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2,Napi::Env env)
 {
 
-try{
+// try{
 
 	// char y[100];
 	char *path_char = new char[path.length() + 1]; 
@@ -39,13 +39,13 @@ try{
 	rotated.release();
 	gray.release();
 	return 1;
-		}
-		catch(cv::Exception& e){
-		  const char* err_msg = e.what();
-    	std::cout << "exception caught: " << err_msg << std::endl;
-		Napi::Error::New(env,e.what()).ThrowAsJavaScriptException();
-		return 0;
-	}
+	// 	}
+	// 	catch(cv::Exception& e){
+	// 	  const char* err_msg = e.what();
+    // 	std::cout << "exception caught: " << err_msg << std::endl;
+	// 	Napi::Error::New(env,e.what()).ThrowAsJavaScriptException();
+	// 	return 0;
+	// }
 }
 Napi::Boolean draw::HocrWrapper(const Napi::CallbackInfo &info)
 {

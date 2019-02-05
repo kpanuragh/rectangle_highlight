@@ -23,7 +23,14 @@ try{
 	Mat rotated = skew_fix::rot(im, skew* CV_PI / 180);	
 	im.release();
 	Mat img_new;
+	try{
 	cvtColor(rotated,img_new,COLOR_BGR2RGBA);
+	}
+	catch(cv::Exception& e)
+	{
+		std::cout << "here you need to validate: " << std::endl;
+	}
+
 	Rect RectangleToDraw(x, y,x2-x, y2-y);
 	rectangle(img_new, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
 	//cvtColor(rotated,rotated,COLOR_GRAY2RGB);

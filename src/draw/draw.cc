@@ -13,18 +13,25 @@ try{
 	std::strcpy(path_char, path.c_str());
 	
 	Mat im = fix_rotate::fix_rotate(path_char);
-	Mat gray;
 	cvtColor(im,im,COLOR_GRAY2RGB);
 	fastNlMeansDenoisingColored(im,im);
+	Mat gray;
 	cvtColor(im, gray, COLOR_BGR2GRAY);
 	Mat preprocessed = skew_fix::preprocess2(gray);
 	double skew;
 	skew_fix::hough_transform(preprocessed, im, &skew);
-	Mat img = skew_fix::rot(im, skew* CV_PI / 180);
-	
+	Mat rotated = skew_fix::rot(im, skew* CV_PI / 180);	
+	im.release();
+	imwrite(outpath,rotated);
+	im=imread(outpath);
 	Rect RectangleToDraw(x, y,x2-x, y2-y);
-	rectangle(img, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
-	imwrite(outpath,img);
+	rectangle(im, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
+	//cvtColor(rotated,rotated,COLOR_GRAY2RGB);
+
+	imwrite(outpath,im);
+	im.release();
+	rotated.release();
+	gray.release();
 	return 1;
 		}
 		catch(cv::Exception& e){

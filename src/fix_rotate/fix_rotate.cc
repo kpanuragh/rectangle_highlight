@@ -39,6 +39,9 @@ Mat fix_rotate::fix_rotate(char* inputfile)
 
 	cv::Mat dst;
 	cv::warpAffine(src, dst, rot, bbox.size());
+	src.release();
+	  api_osd->End();
+    pixDestroy(&image);
     return dst;
 		}
 		catch(cv::Exception& e){

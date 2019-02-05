@@ -22,12 +22,13 @@ try{
 	skew_fix::hough_transform(preprocessed, im, &skew);
 	Mat rotated = skew_fix::rot(im, skew* CV_PI / 180);	
 	im.release();
-	cvtColor(rotated,rotated,COLOR_BGR2GRAY);
+	Mat img_new;
+	cvtColor(rotated,img_new,COLOR_BGR2RGBA);
 	Rect RectangleToDraw(x, y,x2-x, y2-y);
-	rectangle(rotated, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
+	rectangle(img_new, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
 	//cvtColor(rotated,rotated,COLOR_GRAY2RGB);
 
-	imwrite(outpath,rotated);
+	imwrite(outpath,img_new);
 	rotated.release();
 	gray.release();
 	return 1;

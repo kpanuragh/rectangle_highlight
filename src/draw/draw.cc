@@ -3,7 +3,7 @@
 #include "../skew_fix/skew_fix.h"
 #include "../fix_rotate/fix_rotate.h"
 using namespace cv;
-bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2)
+bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2,Napi::Env env)
 {
 
 try{
@@ -30,6 +30,8 @@ try{
 		catch(cv::Exception& e){
 		  const char* err_msg = e.what();
     	std::cout << "exception caught: " << err_msg << std::endl;
+		Napi::Error::New(env,e.what()).ThrowAsJavaScriptException();
+		return 0;
 	}
 }
 Napi::Boolean draw::HocrWrapper(const Napi::CallbackInfo &info)
@@ -47,11 +49,13 @@ Napi::Boolean draw::HocrWrapper(const Napi::CallbackInfo &info)
 	Napi::Number y=info[3].As<Napi::Number>();
 	Napi::Number x2=info[4].As<Napi::Number>();
 	Napi::Number y2=info[5].As<Napi::Number>();
-    return Napi::Boolean::New(env,draw::draw(path.ToString(),outpath.ToString(),x.DoubleValue(),y.DoubleValue(),x2.DoubleValue(),y2.DoubleValue()));
+    return Napi::Boolean::New(env,draw::draw(path.ToString(),outpath.ToString(),x.DoubleValue(),y.DoubleValue(),x2.DoubleValue(),y2.DoubleValue(),env));
 		}
 		catch(cv::Exception& e){
 		  const char* err_msg = e.what();
     	std::cout << "exception caught: " << err_msg << std::endl;
+		Napi::Error::New(info.Env(),e.what()).ThrowAsJavaScriptException();
+		
 	}
 }
 Napi::Object draw::Init(Napi::Env env,Napi::Object exports)

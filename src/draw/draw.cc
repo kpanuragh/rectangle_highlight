@@ -6,7 +6,7 @@ using namespace cv;
 bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2,Napi::Env env)
 {
 
-// try{
+try{
 
 	// char y[100];
 	char *path_char = new char[path.length() + 1]; 
@@ -22,30 +22,22 @@ bool draw::draw(std::string path,std::string outpath,double x,double y,double x2
 	skew_fix::hough_transform(preprocessed, im, &skew);
 	Mat rotated = skew_fix::rot(im, skew* CV_PI / 180);	
 	im.release();
-	Mat img_new;
+	cvtColor(rotated,rotated,COLOR_BGR2GRAY);
 
-	cvtColor(rotated,img_new,COLOR_BGR2RGBA);
-	
-	try{
 	Rect RectangleToDraw(x, y,x2-x, y2-y);
-	rectangle(img_new, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
+	rectangle(rotated, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
 	//cvtColor(rotated,rotated,COLOR_GRAY2RGB);
-}
-	catch(cv::Exception& e)
-	{
-		std::cout << "here you need to validate: " << std::endl;
-	}
-	imwrite(outpath,img_new);
+	imwrite(outpath,rotated);
 	rotated.release();
 	gray.release();
 	return 1;
-	// 	}
-	// 	catch(cv::Exception& e){
-	// 	  const char* err_msg = e.what();
-    // 	std::cout << "exception caught: " << err_msg << std::endl;
-	// 	Napi::Error::New(env,e.what()).ThrowAsJavaScriptException();
-	// 	return 0;
-	// }
+		}
+		catch(cv::Exception& e){
+		  const char* err_msg = e.what();
+    	std::cout << "exception caught: " << err_msg << std::endl;
+		Napi::Error::New(env,e.what()).ThrowAsJavaScriptException();
+		return 0;
+	}
 }
 Napi::Boolean draw::HocrWrapper(const Napi::CallbackInfo &info)
 {

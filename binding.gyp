@@ -11,7 +11,9 @@
         ],
         'conditions': [
       ['OS=="linux"', {
-
+    'include_dirs': [
+            "/usr/local/include/opencv4/"
+    ] 
       }],
       ['OS=="win"', {
           'include_dirs': [

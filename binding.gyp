@@ -1,8 +1,6 @@
 {
     "targets": [{
         "target_name": "rectangle_highlight",
-        "cflags!": [ "-fno-exceptions" ],
-        "cflags_cc!": [ "-fno-exceptions" ],
         "sources": [
             "src/main.cc",
             "src/draw/draw.cc",
@@ -14,7 +12,7 @@
     'include_dirs': [
             "/usr/local/include/opencv4/"
     ],
-    'libraries': ["-l /usr/local/lib/libopencv_core.so","-l /usr/local/lib/libopencv_calib3d.so"," -l /usr/local/lib/libopencv_dnn.so","-l /usr/local/lib/libopencv_features2d.so","-l /usr/local/lib/libopencv_flann.so","-l /usr/local/lib/libopencv_gapi.so","-l /usr/local/lib/libopencv_highgui.so", "-l /usr/local/lib/libopencv_imgcodecs.so", "-l /usr/local/lib/libopencv_imgproc.so","-l /usr/local/lib/libopencv_ml.so"," -l/usr/local/lib/libopencv_objdetect.so", "-l /usr/local/lib/libopencv_photo.so", "/usr/local/lib/libopencv_stitching.so", "-l /usr/local/lib/libopencv_videoio.so","-l /usr/local/lib/libopencv_video.so"],
+    'libraries': ["/usr/local/lib/libopencv_core.so","/usr/local/lib/libopencv_calib3d.so","/usr/local/lib/libopencv_dnn.so","/usr/local/lib/libopencv_features2d.so","/usr/local/lib/libopencv_flann.so","/usr/local/lib/libopencv_gapi.so","/usr/local/lib/libopencv_highgui.so", "/usr/local/lib/libopencv_imgcodecs.so", "/usr/local/lib/libopencv_imgproc.so","/usr/local/lib/libopencv_ml.so","/usr/local/lib/libopencv_objdetect.so", "/usr/local/lib/libopencv_photo.so", "/usr/local/lib/libopencv_stitching.so", "/usr/local/lib/libopencv_videoio.so","/usr/local/lib/libopencv_video.so"],
       }],
       ['OS=="win"', {
           'include_dirs': [

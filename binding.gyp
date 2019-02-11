@@ -13,6 +13,9 @@
 		"cflags!" : [
 			"-fno-exceptions"
 		],
+         "libs":[
+             "opencv4"
+         ], 
 		"cflags_cc!": [
 			"-fno-rtti",
 			"-fno-exceptions"

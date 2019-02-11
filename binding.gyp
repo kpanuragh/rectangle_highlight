@@ -26,10 +26,10 @@
         'conditions': [
       ['OS=="linux"', {
  'libraries': [
-     "opencv4"
+   
  ],
  'include_dirs': [
-            "opencv4"
+            "/usr/local/include/opencv4/"
         ]
       }],
       ['OS=="win"', {

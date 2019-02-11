@@ -25,7 +25,9 @@
 		],
         'conditions': [
       ['OS=="linux"', {
-
+ 'libraries': [
+     "opencv4"
+ ]
       }],
       ['OS=="win"', {
           'include_dirs': [

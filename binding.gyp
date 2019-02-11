@@ -27,7 +27,10 @@
       ['OS=="linux"', {
  'libraries': [
      "opencv4"
- ]
+ ],
+ 'include_dirs': [
+            "opencv4"
+        ]
       }],
       ['OS=="win"', {
           'include_dirs': [

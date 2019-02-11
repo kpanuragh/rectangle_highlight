@@ -20,14 +20,18 @@
 			"-fno-rtti",
 			"-fno-exceptions"
 		],
+        
 		"ldflags" : [
-			"-Wl,-rpath,'$$ORIGIN'"
+            "-L/usr/local/lib","-L/usr/lib/x86_64-linux-gnu/",
+			 "-Wl,-rpath,'/usr/local/lib'"
 		],
+         
         'conditions': [
       ['OS=="linux"', {
- 'libraries': [
-   
- ],
+                'libraries': [
+        "-L/usr/local/lib","-llept"," -ltesseract",
+   "-lopencv_core","-lopencv_highgui"
+        ],
  'include_dirs': [
             "/usr/local/include/opencv4/"
         ]

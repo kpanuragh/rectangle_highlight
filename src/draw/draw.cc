@@ -1,7 +1,5 @@
 #include "draw.h"
 #include<stdio.h>
-#include "../skew_fix/skew_fix.h"
-#include "../fix_rotate/fix_rotate.h"
 using namespace cv;
 bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2,Napi::Env env)
 {
@@ -11,25 +9,12 @@ try{
 	// char y[100];
 	char *path_char = new char[path.length() + 1]; 
 	std::strcpy(path_char, path.c_str());
-	
-	Mat im = fix_rotate::fix_rotate(path_char);
-	cvtColor(im,im,COLOR_GRAY2RGB);
-	fastNlMeansDenoisingColored(im,im);
-	Mat gray;
-	cvtColor(im, gray, COLOR_BGR2GRAY);
-	Mat preprocessed = skew_fix::preprocess2(gray);
-	double skew;
-	skew_fix::hough_transform(preprocessed, im, &skew);
-	Mat rotated = skew_fix::rot(im, skew* CV_PI / 180);	
-	im.release();
-	cvtColor(rotated,rotated,COLOR_BGR2GRAY);
-
+	Mat rotated=imread(path_char);
 	Rect RectangleToDraw(x, y,x2-x, y2-y);
 	rectangle(rotated, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
 	//cvtColor(rotated,rotated,COLOR_GRAY2RGB);
 	imwrite(outpath,rotated);
 	rotated.release();
-	gray.release();
 	return 1;
 		}
 		catch(cv::Exception& e){

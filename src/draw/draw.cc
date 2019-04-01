@@ -1,7 +1,7 @@
 #include "draw.h"
 #include<stdio.h>
 using namespace cv;
-bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2,Napi::Env env)
+bool draw::draw(std::string path,std::string outpath,double x,double y,double x2,double y2,int r,int g,int b,Napi::Env env)
 {
 
 try{
@@ -11,7 +11,7 @@ try{
 	std::strcpy(path_char, path.c_str());
 	Mat rotated=imread(path_char);
 	Rect RectangleToDraw(x, y,x2-x, y2-y);
-	rectangle(rotated, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(0, 0, 255), 2, 8, 0);
+	rectangle(rotated, RectangleToDraw.tl(), RectangleToDraw.br(), Scalar(b, g, r), 2, 8, 0);
 	//cvtColor(rotated,rotated,COLOR_GRAY2RGB);
 	imwrite(outpath,rotated);
 	rotated.release();
@@ -39,7 +39,10 @@ Napi::Boolean draw::HocrWrapper(const Napi::CallbackInfo &info)
 	Napi::Number y=info[3].As<Napi::Number>();
 	Napi::Number x2=info[4].As<Napi::Number>();
 	Napi::Number y2=info[5].As<Napi::Number>();
-    return Napi::Boolean::New(env,draw::draw(path.ToString(),outpath.ToString(),x.DoubleValue(),y.DoubleValue(),x2.DoubleValue(),y2.DoubleValue(),env));
+	Napi::Number r=info[6].As<Napi::Number>();
+	Napi::Number g=info[7].As<Napi::Number>();
+	Napi::Number b=info[8].As<Napi::Number>();
+    return Napi::Boolean::New(env,draw::draw(path.ToString(),outpath.ToString(),x.DoubleValue(),y.DoubleValue(),x2.DoubleValue(),y2.DoubleValue(),r.Int32Value(),g.Int32Value(),b.Int32Value(),env));
 		}
 		catch(cv::Exception& e){
 		  const char* err_msg = e.what();

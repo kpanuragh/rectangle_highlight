@@ -1,14 +1,14 @@
 {
   "name": "rectangle_highlight",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "rectangle_highlight is npm package that can used to draw recatngle on image by using x and y values. It's can be used with object detections to draw the the detetcted objects on image . This package is build on C++ using N-API and it's faster than usual scripting languages",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "configure":"node-gyp configure",
-    "build":"node-gyp rebuild",
-    "debug":"node-gyp rebuild --debug",
-    "clean":"node-gyp clean"
+    "configure": "node-gyp configure",
+    "build": "node-gyp rebuild",
+    "debug": "node-gyp rebuild --debug",
+    "clean": "node-gyp clean"
   },
   "repository": {
     "type": "git",
